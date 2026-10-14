@@ -25,3 +25,5 @@ This project presents the 3D CAD design of a 6-degree-of-freedom (6-DOF) robotic
 
 <!-- Add a screenshot of the assembled robotic arm below -->
 
+![6-DOF-Robotic-Arm](Images/Assembly.png)
+
