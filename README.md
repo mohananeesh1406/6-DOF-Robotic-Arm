@@ -98,21 +98,20 @@ source ~/mujoco_env/bin/activate
 
 Switches your terminal into that environment. The prompt will show `(mujoco_env)`. Repeat this step every time you open a new terminal.
 
-### 4. Install MuJoCo (first time only)
-
-```bash
-pip install mujoco
-```
-
-Installs the MuJoCo physics engine and its Python viewer.
-
-### 5. Launch the arm in MuJoCo
+### 4. Launch the arm in MuJoCo
 
 ```bash
 python -m mujoco.viewer --mjcf=arm.xml
 ```
 
 Loads `arm.xml` and opens the viewer window with the arm. Use the **Control** panel on the right to move each joint with the sliders.
+
+### 5. Closing the simulation
+Close the simulation window and type the below line. 
+
+```bash
+deactivate
+```
 
 ![6-DOF-Robotic-Arm-RVIZ](Images/Mujoco_spawn.png)
 
