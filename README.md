@@ -72,9 +72,49 @@ Once configured, RViz displays the robot model, coordinate frames and Joint stat
 ![6-DOF-Robotic-Arm-URDF](Images/arm_urdf.png)
 ![6-DOF-Robotic-Arm-RVIZ](Images/rviz_arm.png)
 
-## Future Developments
+## MuJoCo
 
-- Spawning the robot model in MuJoCo.
+### 1. Navigate to your Robotic arm package
+
+```bash
+cd path/to/urdf_assembly
+```
+
+Moves into the package folder that contains `arm.xml` and `meshes/`.
+
+### 2. Create a virtual environment (first time only)
+
+```bash
+python3 -m venv ~/mujoco_env
+```
+
+Creates an isolated Python environment at `~/mujoco_env` so MuJoCo doesn't clash with system packages.
+
+### 3. Activate the virtual environment
+
+```bash
+source ~/mujoco_env/bin/activate
+```
+
+Switches your terminal into that environment. The prompt will show `(mujoco_env)`. Repeat this step every time you open a new terminal.
+
+### 4. Install MuJoCo (first time only)
+
+```bash
+pip install mujoco
+```
+
+Installs the MuJoCo physics engine and its Python viewer.
+
+### 5. Launch the arm in MuJoCo
+
+```bash
+python -m mujoco.viewer --mjcf=arm.xml
+```
+
+Loads `arm.xml` and opens the viewer window with the arm. Use the **Control** panel on the right to move each joint with the sliders.
+
+## Future Developments
 - Setting up overhead camera for object detection using OpenCV.
 - Camera calibration for converting pixel coordinates to object location coordinates.
 - Inverse kinematics and actuation for Visual Manipulation.
