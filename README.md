@@ -114,6 +114,9 @@ python -m mujoco.viewer --mjcf=arm.xml
 
 Loads `arm.xml` and opens the viewer window with the arm. Use the **Control** panel on the right to move each joint with the sliders.
 
+![6-DOF-Robotic-Arm-RVIZ](Images/rviz_arm.png)
+
+
 ## Future Developments
 - Setting up overhead camera for object detection using OpenCV.
 - Camera calibration for converting pixel coordinates to object location coordinates.
