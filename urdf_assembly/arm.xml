@@ -1,0 +1,83 @@
+<mujoco model="urdf_assembly">
+  <!-- Place this file next to the "meshes" folder from the sw2urdf export -->
+  <compiler angle="radian" meshdir="meshes" autolimits="true" balanceinertia="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+
+  <default>
+    <default class="arm">
+      <!-- Collisions between arm links are disabled to avoid contact explosions.
+           Set contype/conaffinity to 1 later if you need collision. -->
+      <geom type="mesh" material="arm_mat" contype="0" conaffinity="0"/>
+    </default>
+  </default>
+
+  <asset>
+    <material name="arm_mat" rgba="0.894 0.894 0.894 1"/>
+    <mesh name="Base" file="Base.STL"/>
+    <mesh name="base_cap" file="base_cap.STL"/>
+    <mesh name="shoulder" file="shoulder.STL"/>
+    <mesh name="elbow" file="elbow.STL"/>
+    <mesh name="wrist" file="wrist.STL"/>
+    <mesh name="end_effector" file="end_effector.STL"/>
+  </asset>
+
+  <worldbody>
+    <light name="top" pos="0 0 2" dir="0 0 -1" diffuse="0.8 0.8 0.8"/>
+    <geom name="floor" type="plane" size="1 1 0.05" rgba="0.2 0.3 0.4 1"/>
+
+    <!-- Base (fixed to world: no joint) -->
+    <body name="Base" childclass="arm">
+      <inertial pos="3.5559E-07 0.00041699 0.016915" mass="0.35095"
+                fullinertia="0.00074665 0.00068306 0.0012851 1.3E-09 -1.1962E-09 -1.1975E-06"/>
+      <geom name="Base_geom" mesh="Base"/>
+
+      <body name="base_cap" pos="0 0 0.059">
+        <inertial pos="-1.4199E-05 -0.00074351 0.0088623" mass="0.20993"
+                  fullinertia="0.00035825 0.00031903 0.00046949 -5.4417E-07 5.1889E-06 5.5017E-06"/>
+        <joint name="base_cap_joint" type="hinge" axis="0 0 1" range="-3.14 3.14" damping="1"/>
+        <geom name="base_cap_geom" mesh="base_cap"/>
+
+        <body name="shoulder" pos="-0.015692 0.042555 0.04656">
+          <inertial pos="1.53512482861107E-05 -0.0396558416692502 0.0703731085644241" mass="0.463059515400219"
+                    fullinertia="0.0012656991737272 0.00087998668642321 0.000891797142036309 -3.51935374018815E-07 -5.07145687244049E-07 -5.53502098588181E-05"/>
+          <joint name="shoulder_joint" type="hinge" axis="0 1 0" range="-1.57 1.57" damping="1"/>
+          <geom name="shoulder_geom" mesh="shoulder"/>
+
+          <body name="elbow" pos="-0.00094 -0.028422 0.13316">
+            <inertial pos="7.45629646914381E-09 -0.0169085412128415 0.135032105403826" mass="0.793484761452286"
+                      fullinertia="0.00605475001880524 0.00574564039798139 0.000687302183020682 -3.56690412382835E-09 4.91983282924275E-09 0.000122366658659325"/>
+            <joint name="elbow_joint" type="hinge" axis="0 1 0" range="-1.57 1.57" damping="1"/>
+            <geom name="elbow_geom" mesh="elbow"/>
+
+            <body name="wrist" pos="0 -0.0461 0.27742">
+              <inertial pos="0.000460986576376721 0.029104411841 0.0396570369804108" mass="0.0826370075860569"
+                        fullinertia="7.34750589393241E-05 5.92272757931247E-05 6.42938761063495E-05 -1.50697998437875E-08 -8.45036785406603E-07 -1.2963981470035E-06"/>
+              <joint name="wrist_joint" type="hinge" axis="0 1 0" range="-1.57 1.57" damping="0.05" armature="0.0005"/>
+              <geom name="wrist_geom" mesh="wrist"/>
+
+              <body name="end_effector" pos="0.0006 0.0295 0.06">
+                <inertial pos="9.34523522884145E-05 0.00142324534236538 0.0524507406696926" mass="0.0304353131290648"
+                          fullinertia="2.975555203426E-05 2.64785305628422E-05 3.76337236269015E-06 2.67236457205458E-08 -6.95711677506349E-09 -1.03852791767716E-07"/>
+                <joint name="end_effector_joint" type="hinge" axis="0 0 1" range="-3.14 3.14" damping="0.005" armature="0.0005"/>
+                <geom name="end_effector_geom" mesh="end_effector"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- Position actuators: ctrl = target joint angle (rad). Gains are starting values; tune as needed. -->
+  <actuator>
+    <position name="base_cap_act" joint="base_cap_joint" kp="20" ctrlrange="-3.14 3.14" forcerange="-5 5"/>
+    <position name="shoulder_act" joint="shoulder_joint" kp="50" ctrlrange="-1.57 1.57" forcerange="-10 10"/>
+    <position name="elbow_act" joint="elbow_joint" kp="50" ctrlrange="-1.57 1.57" forcerange="-10 10"/>
+    <position name="wrist_act" joint="wrist_joint" kp="2" ctrlrange="-1.57 1.57" forcerange="-1 1"/>
+    <position name="end_effector_act" joint="end_effector_joint" kp="0.3" ctrlrange="-3.14 3.14" forcerange="-0.5 0.5"/>
+  </actuator>
+
+  <keyframe>
+    <key name="home" qpos="0 0 0 0 0" ctrl="0 0 0 0 0"/>
+  </keyframe>
+</mujoco>
