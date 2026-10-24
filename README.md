@@ -114,7 +114,7 @@ python -m mujoco.viewer --mjcf=arm.xml
 
 Loads `arm.xml` and opens the viewer window with the arm. Use the **Control** panel on the right to move each joint with the sliders.
 
-![6-DOF-Robotic-Arm-RVIZ](Images/rviz_arm.png)
+![6-DOF-Robotic-Arm-RVIZ](Images/Mujoco_spawn.png)
 
 
 ## Future Developments
